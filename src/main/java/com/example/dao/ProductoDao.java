@@ -2,9 +2,10 @@ package com.example.dao;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -31,11 +32,11 @@ public interface ProductoDao extends JpaRepository<Producto, Long>{
     * por la descripcion, etc.
     */
 
-    @Query(value = "select p from Producto left join fetch p.presentacion")
+    @Query(value = "select p from Producto p left join fetch p.presentacion")
     List<Producto> findAll(Sort sort);
 
     @Query(value = "select p from Producto p left join fetch p.presentacion",
-           countQuery = "select count(p) from Producto o left join p.presentacion")
+           countQuery = "select count(p) from Producto p left join p.presentacion")
     public Page<Producto> findAll(Pageable pageable);
     
     //Este metodo sirve para recuperar un producto por su id
